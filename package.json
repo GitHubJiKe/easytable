@@ -1,31 +1,50 @@
 {
-  "name": "easytable",
-  "version": "1.0.0",
-  "description": "easytable with pure js, html and css",
-  "keywords": [
-    "table",
-    "easytable"
-  ],
-  "scripts": {
-    "ci": "npm run build",
-    "build": "tsc",
-    "format": "prettier --write ."
-  },
-  "homepage": "https://github.com/GitHubJiKe/easytable",
-  "bugs": {
-    "url": "https://github.com/GitHubJiKe/easytable/issues"
-  },
-  "author": "peteryuan",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GitHubJiKe/easytable.git"
-  },
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "devDependencies": {
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.2"
-  }
+    "name": "easytable",
+    "version": "1.0.0",
+    "description": "easytable with pure js, html and css",
+    "keywords": [
+        "table",
+        "easytable"
+    ],
+    "main": "dist/index.js",
+    "scripts": {
+        "prepublishOnly": "npm run ci",
+        "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint && npm run test",
+        "build": "tsup",
+        "format": "prettier --write .",
+        "check-format": "prettier --check .",
+        "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+        "lint": "tsc",
+        "test": "vitest run",
+        "dev": "vitest",
+        "local-release": "changeset version && changeset publish"
+    },
+    "homepage": "https://github.com/GitHubJiKe/easytable",
+    "bugs": {
+        "url": "https://github.com/GitHubJiKe/easytable/issues"
+    },
+    "author": "peteryuan",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GitHubJiKe/easytable.git"
+    },
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "import": "./dist/index.js",
+            "default": "./dist/index.cjs"
+        }
+    },
+    "devDependencies": {
+        "@arethetypeswrong/cli": "^0.16.2",
+        "@changesets/cli": "^2.27.8",
+        "prettier": "^3.3.3",
+        "tsup": "^8.2.4",
+        "typescript": "^5.6.2",
+        "vitest": "2.0.5"
+    }
 }

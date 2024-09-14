@@ -10,6 +10,7 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "lib": ["es2022"],
+    "noEmit": true,
 
     /* Strictness */
     "strict": true,
@@ -17,7 +18,7 @@
     "noImplicitOverride": true,
 
     /* If transpiling with TypeScript: */
-    "module": "NodeNext",
+    "module": "Preserve",
     "outDir": "dist",
     "rootDir": "src",
     "sourceMap": true,
