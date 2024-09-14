@@ -1,0 +1,31 @@
+{
+  "name": "easytable",
+  "version": "1.0.0",
+  "description": "easytable with pure js, html and css",
+  "keywords": [
+    "table",
+    "easytable"
+  ],
+  "scripts": {
+    "ci": "npm run build",
+    "build": "tsc",
+    "format": "prettier --write ."
+  },
+  "homepage": "https://github.com/GitHubJiKe/easytable",
+  "bugs": {
+    "url": "https://github.com/GitHubJiKe/easytable/issues"
+  },
+  "author": "peteryuan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHubJiKe/easytable.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
+  }
+}
