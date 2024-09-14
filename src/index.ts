@@ -1,4 +1,4 @@
-import { renderRows, renderTableHeader } from './utils';
+import { renderRow, renderRows, renderTableHeader } from './utils';
 
 export interface IRow {
   [x: string]: unknown;
@@ -10,16 +10,16 @@ export interface IColumn {
   field: string;
   label: string;
   align?: TAlign;
-  sortable?: boolean;
   render?: (col: IColumn, row: IRow) => string | Node;
 }
 
-export type CellClickEvent = (col: IColumn, row: IRow) => void;
+export type CellClickEvent = (col: IColumn, row: IRow, index: number) => void;
 export type RowClickEvent = (row: IRow, index: number) => void;
 export interface IEasyTableProps {
   columns: IColumn[];
   rows: IRow[];
   el: string | Element;
+  width?: string;
   height?: string;
   onCellClick?: CellClickEvent;
   onRowClick?: RowClickEvent;
@@ -44,10 +44,15 @@ export default class EasyTable {
 
   render() {
     const tableHeader = renderTableHeader(this.#options.columns);
+    const easytable = document.createElement('div');
+    easytable.classList.add('easytable');
 
+    if (this.#options.width) {
+      easytable.style.width = this.#options.width;
+    }
     if (this.#el) {
       if (tableHeader) {
-        this.#el.append(tableHeader);
+        easytable.append(tableHeader);
       } else {
         throw new Error('generate table header failed,please check config');
       }
@@ -59,7 +64,8 @@ export default class EasyTable {
         tableContent.style.height = this.#options.height;
       }
       tableContent.append(...tableRows);
-      this.#el.append(tableContent);
+      easytable.append(tableContent);
+      this.#el.append(easytable);
       this.unmounted = false;
     } else {
       throw new Error('no el found,please check config');
@@ -69,5 +75,15 @@ export default class EasyTable {
   unmount() {
     this.unmounted = true;
     this.#el.innerHTML = '';
+  }
+
+  sort(sortFunc: (a: IRow, b: IRow) => number) {
+    this.#options.rows.sort(sortFunc);
+    this.refresh();
+  }
+
+  refresh() {
+    this.unmount();
+    this.render();
   }
 }

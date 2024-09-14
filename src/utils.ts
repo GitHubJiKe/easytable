@@ -1,7 +1,5 @@
 import type { CellClickEvent, IColumn, IEasyTableProps, IRow, TAlign } from '.';
 
-export const add = (a: number, b: number) => a + b;
-
 export const renderTableHeader = (columns: IColumn[]) => {
   const len = columns.length;
   const tableHeader = document.createElement('div');
@@ -21,7 +19,8 @@ export const renderTableHeader = (columns: IColumn[]) => {
 export const renderRow = (
   columns: IColumn[],
   row: IRow,
-  onCellClick?: CellClickEvent,
+  onCellClick: CellClickEvent,
+  rowIndex: number,
 ) => {
   const len = columns.length;
   const tableRow = document.createElement('div');
@@ -38,7 +37,7 @@ export const renderRow = (
     }
     if (onCellClick) {
       cell.addEventListener('click', (e) => {
-        onCellClick(col, row);
+        onCellClick(col, row, rowIndex);
       });
       cell.style.cursor = 'pointer';
     }
@@ -54,7 +53,7 @@ export const renderRows = (opts: IEasyTableProps) => {
   const result = [];
   for (let index = 0; index < len; index++) {
     const row = rows[index]!;
-    const tableRow = renderRow(columns, row, onCellClick);
+    const tableRow = renderRow(columns, row, onCellClick!, index);
     if (onRowClick) {
       tableRow.addEventListener('click', (e) => {
         onRowClick(row, index);

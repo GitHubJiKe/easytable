@@ -1,7 +1,7 @@
 import EasyTable from '../dist/index.js';
 
 const columns = [
-  { field: 'name', label: '姓名', align: 'center' },
+  { field: 'name', label: '姓名', align: 'left' },
   {
     field: 'age', label: '年龄', align: 'right', render: (col, row) => {
       const cell = document.createElement('span')
@@ -11,6 +11,14 @@ const columns = [
       return cell
     }
   },
+  {
+    field: '操作', label: '操作', align: 'center', render: (col, row) => {
+      const cell = document.createElement('span')
+      cell.innerText = '删除'
+      cell.style.color = 'blue'
+      return cell
+    }
+  }
 ];
 
 const rows = [
@@ -45,16 +53,24 @@ const table = new EasyTable({
   el: '#root',
   columns,
   rows,
-  height: '300px',
-  onCellClick(col, row) {
-    console.log(row[col.field]);
+  height: '314px',
+  width: '300px',
+  onCellClick(col, row, index) {
+    if (col.field === '操作') {
+      rows.splice(index, 1)
+      table.refresh()
+    } else {
+      console.log(col, row[col.field]);
+    }
   },
   onRowClick(row, index) {
-    console.log(row, index);
+    // console.log(row, index);
   }
 });
 
+
 table.render();
+
 document.querySelector('#toogle').addEventListener('click', () => {
   console.log(table.unmounted);
   if (table.unmounted) {
@@ -62,4 +78,10 @@ document.querySelector('#toogle').addEventListener('click', () => {
   } else {
     table.unmount()
   }
+})
+
+document.querySelector('#sort').addEventListener('click', () => {
+  table.sort((a, b) => {
+    return b['age'] - a['age']
+  })
 })
