@@ -9,7 +9,6 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "lib": ["es2022"],
     "noEmit": true,
 
     /* Strictness */
@@ -18,6 +17,7 @@
     "noImplicitOverride": true,
 
     /* If transpiling with TypeScript: */
-    "module": "Preserve"
+    "module": "Preserve",
+    "types": ["@vitest/browser/providers/playwright"]
   }
 }

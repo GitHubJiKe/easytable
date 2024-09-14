@@ -1,6 +1,10 @@
-import { add } from './utils.js';
+import type { IColumn } from './index.js';
+import { renderTableHeader } from './utils.js';
 import { test, expect } from 'vitest';
 
-test('add', () => {
-  expect(add(1, 2)).toBe(3);
+test('renderTableHeader', () => {
+  const columns: IColumn[] = [{ field: 'name', label: '姓名' }];
+  expect(renderTableHeader(columns)?.innerHTML).toEqual(
+    '<div class="header-cell">姓名</div>',
+  );
 });
